@@ -1,0 +1,24 @@
+main()
+read_char:
+    display prompt message 
+    read input character into char 
+    display output message text
+    temp := char 
+    char := char AND FOH {mask off lower half}
+    char := char/16{shift right by 4 positions}
+       {The last two steps can be done by shr}
+    convert char to hex equivalent and display
+    char := temp{restore char}7
+    char := char AND 0FH {mask off upper half}
+    convert char to hex equivalent and display
+    display query message
+    read response
+    if(response = 'Y')
+    then 
+        goto done 
+    else 
+        goto read_char 
+    end if 
+ done:
+    return
+ end main

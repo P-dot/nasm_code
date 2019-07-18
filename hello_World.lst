@@ -1,0 +1,27 @@
+     1                                  ; Program 
+     2                                  
+     3                                  ; Data Section
+     4                                  segment .data 
+     5 00000000 48656C6C6F20576F72-             msg db 'Hello World', 0xa       ; String to deploy
+     5 00000009 6C640A             
+     6                                          len equ $ - msg                 ; length of the string PSEUDO-INSTRUCTION
+     7                                  
+     8                                  
+     9                                  ; Variables section
+    10                                  segment .bss 
+    11 00000000 <res 00000001>                  iCount: resb 1
+    12                                          
+    13                                  ; Code Section
+    14                                  segment .text
+    15                                      global _start    ;Initialize the code , DIRECTIVE
+    16                                  
+    17                                  _start:              ;Entry point "" ""
+    18 00000000 BA0C000000                  mov edx,len      ;Move to edx the message's length "" ""
+    19 00000005 BB[00000000]                mov ebx,msg      ;Move to ecx the message to deploy INSTRUCTION
+    20 0000000A BB01000000                  mov ebx,1        ;Move to ebx 1, that correspond to standard exit"stdout"
+    21 0000000F B804000000                  mov eax,4        ;Move to eax 4, that is call to system function sys_write
+    22 00000014 CD80                        int 0x80         ;Execute the interruption 0x80 that call to kernel
+    23                                  
+    24 00000016 B801000000                  mov eax,1        ;Move to eax 1, to indicate the call at the function sys_exit 
+    25 0000001B BB02000000                  mov ebx,2        ;To indicate return code.
+    26 00000020 CD80                        int 0x80         ;call to kernel and execute interruption through 0x80
